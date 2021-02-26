@@ -27,9 +27,9 @@ public class PatientController {
     public PatientController(PatientService patientService) {this.patientService = patientService;}
 
     @PostMapping("/patients")
-    public ResponseEntity addPatient(@RequestBody PatientDto patientDto) {
+    public ResponseEntity addPatient(@RequestBody Patient patientDto) {
         log.info("Request : {}", patientDto);
-        patientService.savePatient(patientDto.toPatient());
+        patientService.savePatient(patientDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -62,7 +62,7 @@ public class PatientController {
 
 
     @GetMapping("/patient/update/{id}")
-    public String showUpdateForm(@PathVariable("id") String id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Patient patient = patientService.findById(id);
         model.addAttribute("patient", patient);
         logger.info("Bidlist's updating form display successful");
@@ -71,7 +71,7 @@ public class PatientController {
     }
 
     @PostMapping("/patient/update/{id}")
-    public String updateBid(@PathVariable("id") String id, @Valid Patient patient,
+    public String updateBid(@PathVariable("id") Integer id, @Valid Patient patient,
                             BindingResult result, Model model) {
         if(result.hasErrors()) {
             logger.info("Bidlist updating failed, go back to updating form display, has errors");
@@ -86,7 +86,7 @@ public class PatientController {
     }
 
     @GetMapping("/patient/delete/{id}")
-    public String deleteBid(@PathVariable("id") String id, Model model) {
+    public String deleteBid(@PathVariable("id") Integer id, Model model) {
         Patient patient = patientService.deletePatient(id);
         model.addAttribute("patients", patientService.findAll());
         logger.info("Bidlist deleted successfuly, model updated");

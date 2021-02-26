@@ -23,13 +23,13 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Patient deletePatient(String id) {
+    public Patient deletePatient(Integer id) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bidlist Id:" + id));
         patientRepository.delete(patient);
         return patient;
     }
 
-    public Patient findById(String id) {
+    public Patient findById(Integer id) {
         return patientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     }
 }
