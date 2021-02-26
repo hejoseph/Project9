@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <h2>Add New Note</h2>
+    </div>
+
+    <div class="row">
+        <form action="#" th:action="@{/note/validate}" th:object="${note}" method="post" class="form-horizontal" style="width: 100%">
+            <div class="form-group">
+                <label for="date" class="col-sm-2 control-label required">Date</label>
+                <div class="col-sm-10">
+                    <input class="input-field col-4" type="text" th:field="*{date}" id="date" maxlength="30" size="30"
+                           placeholder="date" required>
+                    <p class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
+                </div>
+                <label for="doctorName" class="col-sm-2 control-label required">Doctor Name</label>
+                <div class="col-sm-10">
+                    <input class="input-field col-4" type="text" th:field="*{doctorName}" id="doctorName" maxlength="30" size="30"
+                           placeholder="doctorName" required>
+                    <p class="text-danger" th:if="${#fields.hasErrors('doctorName')}" th:errors="*{doctorName}"></p>
+                </div>
+                <label for="title" class="col-sm-2 control-label required">Title</label>
+                <div class="col-sm-10">
+                    <input class="input-field col-4" type="text" th:field="*{title}" id="title" maxlength="30" size="30"
+                           placeholder="title" required>
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                <label for="text" class="col-sm-2 control-label required">Text</label>
+                <div class="col-sm-10">
+                    <input class="input-field col-4" type="text" th:field="*{text}" id="text" maxlength="30" size="30"
+                           placeholder="text" required>
+                    <p class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <a class="btn btn-danger btn-sm" href="/note/list">Cancel</a>
+                        <input class="btn btn-primary btn-sm btn-submit" type="submit" value="Save data">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
