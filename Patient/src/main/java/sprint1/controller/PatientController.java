@@ -40,6 +40,19 @@ public class PatientController {
         return "patient/list";
     }
 
+    @RequestMapping("/patient/history")
+    public String history(Model model)
+    {
+        model.addAttribute("patients", patientService.findPatientsHistory());
+        return "patient/history";
+    }
+
+    @RequestMapping("/patient/{id}/history")
+    public String patientHistory(@PathVariable("id") Integer id, Model model) throws Exception {
+        model.addAttribute("patients", patientService.findPatientHistory(id));
+        return "patient/history";
+    }
+
     //get page form add
     @GetMapping("/patient/add")
     public String addBidForm(Patient p) {

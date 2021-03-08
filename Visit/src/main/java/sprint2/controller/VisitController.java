@@ -42,7 +42,14 @@ public class VisitController {
 
     //get page form add
     @GetMapping("/visit/add")
-    public String addBidForm(Visit p) {
+    public String addBidForm(Visit visit, Model model) {
+        return "visit/add";
+    }
+
+    @GetMapping("/visit/add/{patientId}")
+    public String addVisitForPatient(@PathVariable("patientId") String patientId, Visit visit, Model model) {
+        visit.setPatientId(patientId);
+        model.addAttribute("visit",visit);
         return "visit/add";
     }
 
@@ -90,16 +97,6 @@ public class VisitController {
         logger.info("visit deleted successfuly, model updated");
         logger.info(visit.toString());
         return "redirect:/visit/list";
-    }
-
-    @GetMapping("/visits")
-    public List<Visit> getAllVisit() {
-        return visitService.findAll();
-    }
-
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from TourGuide! GpsUtil";
     }
 
 }

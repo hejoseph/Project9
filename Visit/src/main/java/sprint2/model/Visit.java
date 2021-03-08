@@ -15,11 +15,14 @@ public class Visit {
     private String date;
     private String doctorName;
     private String comment;
+    private String patientId;
 
-    public Visit(String id, String date, String doctorName, String comment) {
+
+    public Visit(String id, String date, String doctorName, String comment, String patientId) {
         this.id = id;
         this.date = date;
         this.doctorName = doctorName;
         this.comment = comment;
+        this.patientId = patientId;
     }
 }

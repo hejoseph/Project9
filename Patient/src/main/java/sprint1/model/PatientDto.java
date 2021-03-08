@@ -2,6 +2,8 @@ package sprint1.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PatientDto {
     private String id;
@@ -11,6 +13,7 @@ public class PatientDto {
     private String address;
     private String phone;
     private String gender;
+    private List<Visit> visits;
 
 //    public Patient toPatient(){
 //        return Patient.builder().firstname(this.firstname)

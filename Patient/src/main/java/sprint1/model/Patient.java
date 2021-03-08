@@ -1,6 +1,11 @@
 package sprint1.model;
 
+import sun.reflect.generics.visitor.Visitor;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+//import com.project9.Sprint2.Visit;
 
 @Entity
 @Table(name = "patient")
@@ -16,6 +21,9 @@ public class Patient {
     private String phone;
     private String gender;
 
+    @Transient
+    private List<Visit> visits;
+
     public Patient(String firstname, String surname, String dob, String address, String phone, String gender) {
         this.firstname = firstname;
         this.surname = surname;
@@ -23,6 +31,7 @@ public class Patient {
         this.address = address;
         this.phone = phone;
         this.gender = gender;
+        this.visits = new ArrayList<>();
     }
 
     public Patient() {
@@ -84,4 +93,11 @@ public class Patient {
         this.gender = gender;
     }
 
+    public List<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
+    }
 }

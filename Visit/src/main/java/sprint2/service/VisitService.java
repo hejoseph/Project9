@@ -23,6 +23,8 @@ public class VisitService {
         return visitRepository.findAll();
     }
 
+
+
     public Visit deleteVisit(String id) {
         Visit visit = visitRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bidlist Id:" + id));
         visitRepository.delete(visit);
@@ -31,5 +33,9 @@ public class VisitService {
 
     public Visit findById(String id) {
         return visitRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
+    }
+
+    public List<Visit> getVisitsFromPatient(String patientId) {
+        return visitRepository.findByPatientId(patientId);
     }
 }

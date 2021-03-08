@@ -6,15 +6,15 @@ services:
     ports:
       - 27017:27017
     command: --smallfiles
-  api:
-    image: visit
-    ports:
-      - 9093:8080
-    links:
-      - api-database3
-  api2:
-    image: patient2
-    ports:
-      - 9092:8080
-    links:
-      - api-database3
+#  api:
+#    image: visit
+#    ports:
+#      - 9093:8080
+#    links:
+#      - api-database3
+#  api2:
+#    image: patient2
+#    ports:
+#      - 9092:8080
+#    links:
+#      - api-database3

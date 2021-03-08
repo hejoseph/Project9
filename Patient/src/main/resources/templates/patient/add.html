@@ -30,7 +30,7 @@
                 </div>
                 <label for="dob" class="col-sm-2 control-label required">Date Of Birth</label>
                 <div class="col-sm-10">
-                    <input class="input-field col-4" type="text" th:field="*{dob}" id="dob" maxlength="30" size="30"
+                    <input class="input-field col-4" type="date" th:field="*{dob}" id="dob" maxlength="30" size="30"
                            placeholder="dob" required>
                     <p class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></p>
                 </div>

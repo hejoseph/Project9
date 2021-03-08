@@ -8,7 +8,7 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.project9</groupId>
+	<groupId>sprint2</groupId>
 	<artifactId>Sprint2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Visit</name>

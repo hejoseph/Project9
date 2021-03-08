@@ -46,6 +46,13 @@ public class NoteController {
         return "note/add";
     }
 
+    @GetMapping("/note/add/{visitId}")
+    public String addNoteForVisit(@PathVariable("visitId") String visitId, Note note, Model model) {
+        note.setVisitId(visitId);
+        model.addAttribute("note",note);
+        return "note/add";
+    }
+
     @PostMapping("/note/validate")
     public String validate(@Valid Note note, BindingResult result, Model model) {
         if (!result.hasErrors()) {
@@ -69,7 +76,7 @@ public class NoteController {
     }
 
     @PostMapping("/note/update/{id}")
-    public String updateBid(@PathVariable("id") String id, @Valid Note note,
+    public String updateNote(@PathVariable("id") String id, @Valid Note note,
                             BindingResult result, Model model) {
         if(result.hasErrors()) {
             logger.info("Bidlist updating failed, go back to updating form display, has errors");
@@ -90,16 +97,6 @@ public class NoteController {
         logger.info("note deleted successfuly, model updated");
         logger.info(note.toString());
         return "redirect:/note/list";
-    }
-
-    @GetMapping("/notes")
-    public List<Note> getAllNote() {
-        return noteService.findAll();
-    }
-
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from TourGuide! GpsUtil";
     }
 
 }
