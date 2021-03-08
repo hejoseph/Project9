@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-6">
+			<a href="http://localhost:8090/patient/history">Patient History</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8090/patient/list">Patient List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8080/visit/list">Visit List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8081/note/list">Note List</a>&nbsp;|&nbsp;
+		</div>
+	</div>
+	<div class="row"><h2>Note List</h2></div>
+	<div class="row">
+		<a href="/note/add" class="btn btn-primary btn-sm">Add New</a>
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Doctor Name</th>
+				<th>Title</th>
+				<th>Text</th>
+				<th>Visit Id</th>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="note : ${notes}">
+				<td style="width: 10%" th:text="${note.id}"></td>
+				<td th:text="${note.date}"></td>
+				<td th:text="${note.doctorName}"></td>
+				<td th:text="${note.title}"></td>
+				<td th:text="${note.text}"></td>
+				<td th:text="${note.visitId}"></td>
+				<td style="width: 15%" class="text-center">
+					<a th:href="@{/note/update/{id}(id=${note.id})}">Edit</a>&nbsp;|&nbsp;
+					<a th:href="@{/note/delete/{id}(id=${note.id})}">Delete</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

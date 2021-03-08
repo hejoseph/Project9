@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Home</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-6">
+			<a href="http://localhost:8090/patient/history">Patient History</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8090/patient/list">Patient List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8080/visit/list">Visit List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:8081/note/list">Note List</a>&nbsp;|&nbsp;
+		</div>
+	</div>
+	<div class="row"><h2>Patient List</h2></div>
+	<div class="row">
+		<a href="/patient/add" class="btn btn-primary btn-sm">Add New</a>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Firstname</th>
+					<th>Surname</th>
+					<th>Date of Birth</th>
+					<th>address</th>
+					<th>phone</th>
+					<th>gender</th>
+					<th>action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="patient : ${patients}">
+					<td><a th:href="@{http://localhost:8090/patient/{id}/history(id=${patient.id})}" th:text="${patient.id}"></a></td>
+					<td th:text="${patient.firstname}"></td>
+					<td th:text="${patient.surname}"></td>
+					<td th:text="${patient.dob}"></td>
+					<td th:text="${patient.address}"></td>
+					<td th:text="${patient.phone}"></td>
+					<td th:text="${patient.gender}"></td>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{http://localhost:8080/visit/add/{id}(id=${patient.id})}">Add Visit</a>&nbsp;|&nbsp;
+						<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>
