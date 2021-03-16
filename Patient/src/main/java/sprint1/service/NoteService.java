@@ -4,10 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import sprint1.model.Note;
-import sprint1.model.Visit;
-
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -37,8 +34,8 @@ public class NoteService {
 //        return visits;
 //    }
 
-    public List<Note> getNotesFromVisit(String visitId){
-        ResponseEntity<Note[]> response = restTemplate.getForEntity(serviceUrl+"/notes?visitId={visitId}", Note[].class,visitId);
+    public List<Note> getNotesFromPatient(String patientId){
+        ResponseEntity<Note[]> response = restTemplate.getForEntity(serviceUrl+"/notes?patientId={patientId}", Note[].class,patientId);
         List<Note> notes = Arrays.asList(response.getBody());
         if(notes.size()==0){
             return null;

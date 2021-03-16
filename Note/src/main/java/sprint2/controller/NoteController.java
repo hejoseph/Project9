@@ -46,9 +46,9 @@ public class NoteController {
         return "note/add";
     }
 
-    @GetMapping("/note/add/{visitId}")
-    public String addNoteForVisit(@PathVariable("visitId") String visitId, Note note, Model model) {
-        note.setVisitId(visitId);
+    @GetMapping("/note/add/{patientId}")
+    public String addNoteForPatient(@PathVariable("patientId") String patientId, Note note, Model model) {
+        note.setPatientId(patientId);
         model.addAttribute("note",note);
         return "note/add";
     }

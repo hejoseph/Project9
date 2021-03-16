@@ -13,7 +13,6 @@ public class PatientDto {
     private String address;
     private String phone;
     private String gender;
-    private List<Visit> visits;
 
 //    public Patient toPatient(){
 //        return Patient.builder().firstname(this.firstname)

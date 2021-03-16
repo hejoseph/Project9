@@ -33,7 +33,7 @@ public class NoteService {
         return noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     }
 
-    public List<Note> getNotesFromVisit(String visitId) {
-        return noteRepository.findByVisitId(visitId);
+    public List<Note> getNotesFromPatient(String patientId) {
+        return noteRepository.findByPatientId(patientId);
     }
 }

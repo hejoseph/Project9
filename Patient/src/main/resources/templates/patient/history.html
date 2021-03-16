@@ -44,7 +44,7 @@
 					<td th:text="${patient.phone}"></td>
 					<td th:text="${patient.gender}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{http://localhost:8080/visit/add/{id}(id=${patient.id})}">Add Visit</a>&nbsp;|&nbsp;
+						<a th:href="@{http://localhost:8081/note/add/{id}(id=${patient.id})}">Add Note</a>&nbsp;|&nbsp;
 						<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
 						<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
 					</td>
@@ -54,36 +54,7 @@
 
 		</div>
 
-		<div th:each="visit : ${patient.visits}">
-			<!--th:if="${patient.visits}"-->
-			<div class="row justify-content-center">
-				<table class="table table-bordered col-10">
-					<thead>
-					<tr class="bg-success text-white">
-						<th>Visit ID</th>
-						<th>Date</th>
-						<th>Doctor Name</th>
-						<th>Comment</th>
-						<th>Action</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr >
-						<td style="width: 10%" th:text="${visit.id}"></td>
-						<td th:text="${visit.date}"></td>
-						<td th:text="${visit.doctorName}"></td>
-						<td th:text="${visit.comment}"></td>
-						<td style="width: 15%" class="text-center">
-							<a th:href="@{http://localhost:8081/note/add/{id}(id=${visit.id})}">Add Note</a>&nbsp;|&nbsp;
-							<a th:href="@{http://localhost:8080/visit/update/{id}(id=${visit.id})}">Edit</a>&nbsp;|&nbsp;
-							<a th:href="@{http://localhost:8080/visit/delete/{id}(id=${visit.id})}">Delete</a>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div th:if="${visit.notes}" class="row justify-content-end">
+			<div th:if="${patient.notes}" class="row justify-content-end">
 				<table class="table table-bordered col-10">
 					<thead>
 					<tr class="bg-info text-white">
@@ -96,7 +67,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr th:each="note : ${visit.notes}">
+					<tr th:each="note : ${patient.notes}">
 						<td style="width: 10%" th:text="${note.id}"></td>
 						<td th:text="${note.date}"></td>
 						<td th:text="${note.doctorName}"></td>
@@ -110,8 +81,6 @@
 					</tbody>
 				</table>
 			</div>
-
-		</div>
 
 
 	</div>

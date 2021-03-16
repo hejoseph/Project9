@@ -16,14 +16,13 @@ public class Note {
     private String doctorName;
     private String title;
     private String text;
-    private String visitId;
-
-    public Note(String id, String date, String doctorName, String title, String text, String visitId) {
+    private String patientId;
+    public Note(String id, String date, String doctorName, String title, String text, String patientId) {
         this.id = id;
         this.date = date;
         this.doctorName = doctorName;
         this.title = title;
         this.text = text;
-        this.visitId = visitId;
+        this.patientId = patientId;
     }
 }
