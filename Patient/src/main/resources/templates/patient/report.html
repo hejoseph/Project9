@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div class="row"><h2>Patient History</h2></div>
+	<div class="row"><h2>Patient Report</h2></div>
 	<div th:each="patient : ${patients}" class="container">
 		<div class="row justify-content-start">
 			<table class="table table-bordered col-10">
@@ -30,6 +30,7 @@
 					<th>address</th>
 					<th>phone</th>
 					<th>gender</th>
+					<th>report</th>
 					<th>action</th>
 				</tr>
 				</thead>
@@ -42,6 +43,7 @@
 					<td th:text="${patient.address}"></td>
 					<td th:text="${patient.phone}"></td>
 					<td th:text="${patient.gender}"></td>
+					<td th:text="${patient.report}"></td>
 					<td style="width: 15%" class="text-center">
 						<a th:href="@{http://localhost:8081/note/add/{id}(id=${patient.id})}">Add Note</a>&nbsp;|&nbsp;
 						<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;

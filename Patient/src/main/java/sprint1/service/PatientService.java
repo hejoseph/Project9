@@ -62,4 +62,8 @@ public class PatientService {
         }
         return patients;
     }
+
+    public Patient getPatient(String patientId) {
+        return patientRepository.findById(Integer.parseInt(patientId)).orElseThrow(()->new IllegalArgumentException("patient id="+patientId+" not found"));
+    }
 }

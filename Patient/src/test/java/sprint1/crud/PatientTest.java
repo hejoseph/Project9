@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import sprint1.model.Patient;
 import sprint1.repository.PatientRepository;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class PatientTest {
 
     @Test
     public void patientTest() {
-        Patient patient = new Patient("a","b","c","d","e","f");
+        Patient patient = new Patient("a","b", "c","d","e","f");
 //
 //        // Save
         patient = patientRepository.save(patient);

@@ -17,6 +17,8 @@ import sprint1.repository.PatientRepository;
 
 import javax.annotation.PostConstruct;
 
+import java.util.Date;
+
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 public class PatientControllerTest {
 
-    Patient patient = new Patient("a","b","c","d","e","f");
+    Patient patient = new Patient("a","b", "c","d","e","f");
 
     @Autowired
     PatientRepository patientDAO;
@@ -95,7 +97,7 @@ public class PatientControllerTest {
     @Test
     public void validPatientTest() throws Exception {
         this.mockmvc.perform(post("/patient/validate")
-            .content(asJsonString(new Patient("abc","abc","abc", "firstName4", "lastName4", "email4@mail.com")))
+            .content(asJsonString(patient))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON));
 //            .andExpect(status().isCreated())
@@ -105,7 +107,7 @@ public class PatientControllerTest {
     @Test
     public void updatePatientTest() throws Exception {
         this.mockmvc.perform(post("/patient/update/"+patient.getId())
-                .content(asJsonString(new Patient("abc","abc","abc", "firstName4", "lastName4", "email4@mail.com")))
+                .content(asJsonString(patient))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 //            .andExpect(status().isCreated())

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import sprint2.model.Note;
-import sprint2.model.NoteDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +26,9 @@ public class NoteController {
     public NoteController(NoteService noteService) {this.noteService = noteService;}
 
     @PostMapping("/notes")
-    public ResponseEntity addNote(@RequestBody NoteDto noteDto) {
-        log.info("Request : {}", noteDto);
-        noteService.saveNote(noteDto.toNote());
+    public ResponseEntity addNote(@RequestBody Note note) {
+        log.info("Request : {}", note);
+        noteService.saveNote(note);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

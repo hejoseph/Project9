@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sprint1.service.PatientService;
+import sprint1.service.ReportService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,8 +23,10 @@ public class PatientController {
     private static final Logger logger = LogManager.getLogger(PatientController.class);
 
     private final PatientService patientService;
+    private final ReportService reportService;
 
-    public PatientController(PatientService patientService) {this.patientService = patientService;}
+    public PatientController(PatientService patientService, ReportService reportService) {this.patientService = patientService;
+    this.reportService = reportService;}
 
     @PostMapping("/patients")
     public ResponseEntity addPatient(@RequestBody Patient patientDto) {
@@ -51,6 +54,18 @@ public class PatientController {
         model.addAttribute("patients", patientService.findPatientHistory(id));
         return "patient/history";
     }
+
+    @RequestMapping("/report/patient/{id}")
+    public String generateReport(@PathVariable("id") Integer id, Model model) throws Exception {
+        List<Patient> patients = patientService.findPatientHistory(id);
+        if(patients.size()==1){
+            String result = reportService.generateReport(id+"");
+            patients.get(0).setReport(result);
+        }
+        model.addAttribute("patients", patients);
+        return "patient/report";
+    }
+
 
     //get page form add
     @GetMapping("/patient/add")

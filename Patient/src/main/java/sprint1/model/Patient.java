@@ -2,6 +2,7 @@ package sprint1.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 //import com.project9.Sprint2.Visit;
 
@@ -21,6 +22,9 @@ public class Patient {
 
     @Transient
     private List<Note> notes;
+
+    @Transient
+    private String report;
 
     public Patient(String firstname, String surname, String dob, String address, String phone, String gender) {
         this.firstname = firstname;
@@ -97,5 +101,13 @@ public class Patient {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
     }
 }
