@@ -39,11 +39,13 @@ public class PatientService {
 
     public List<Patient> findPatientsHistory() {
         List<Patient> patients = patientRepository.findAll();
+        System.out.println("[PATIENT LIST]");
 //        HashMap<String, Visit> visits = noteService.getAllVisits();
         for(Patient patient : patients){
+            System.out.println("[Try getting notes]");
             List<Note> notes = noteService.getNotesFromPatient(patient.getId()+"");
             patient.setNotes(notes);
-
+            System.out.println("[notes got it]");
         }
         return patients;
     }

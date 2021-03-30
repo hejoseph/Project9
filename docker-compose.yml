@@ -1,0 +1,50 @@
+version: "3"
+services:
+  api-database3:
+    image: mongo:3.2.4
+    container_name: "api-database3"
+    ports:
+      - 27017:27017
+    command: --smallfiles
+    networks:
+      - project9-mysql
+  note:
+    image: note:latest
+    restart: always
+    container_name: note
+    ports:
+      - 9031:9031
+    networks:
+      - project9-mysql
+  mysqldb3:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    networks:
+      - project9-mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=demo9
+  patient:
+    image: patient
+    container_name: "patient"
+    ports:
+      - "9030:9030"
+    networks:
+      - project9-mysql
+    depends_on:
+      - mysqldb3
+  report:
+    image: report:latest
+    restart: always
+    container_name: "report"
+    ports:
+      - 9032:9032
+    networks:
+      - project9-mysql
+
+networks:
+  project9-mysql:
+    driver: bridge

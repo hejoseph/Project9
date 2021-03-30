@@ -25,4 +25,11 @@ public class ReportRestController {
         return reportService.generateReport(patientId);
     }
 
+    @RequestMapping("/")
+    public String index() {
+        return "Report Controller is up";
+    }
+
+
+
 }

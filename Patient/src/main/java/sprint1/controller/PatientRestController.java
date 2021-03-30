@@ -2,6 +2,7 @@ package sprint1.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sprint1.model.Note;
@@ -24,5 +25,10 @@ public class PatientRestController {
         return patientService.getPatient(patientId);
     }
 
+
+    @RequestMapping("/")
+    public String index() {
+        return "Patient Controller is up";
+    }
 
 }

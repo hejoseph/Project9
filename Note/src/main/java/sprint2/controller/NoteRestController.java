@@ -31,7 +31,7 @@ public class NoteRestController {
 
     @RequestMapping("/")
     public String index() {
-        return "Greetings from TourGuide! GpsUtil";
+        return "Note Controller is up";
     }
 
 

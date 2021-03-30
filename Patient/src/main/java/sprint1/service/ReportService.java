@@ -1,8 +1,12 @@
 package sprint1.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import sprint1.model.Note;
 
 import java.util.Arrays;
@@ -12,13 +16,14 @@ import java.util.List;
 public class ReportService {
 
     public RestTemplate restTemplate;
+
+    @Value("${report.url}")
     public String serviceUrl;
-//    private final WebClient webClient;
+    private WebClient webClient;
 
     public ReportService() {
-        this.serviceUrl = "http://localhost:8082";
+        this.serviceUrl = "http://localhost:9032";
         this.restTemplate = new RestTemplate();
-//        this.webClient = WebClient.create(this.serviceUrl);
     }
 
 //    public HashMap<String, Visit> getAllVisits(){
@@ -36,8 +41,18 @@ public class ReportService {
 //    }
 
     public String generateReport(String patientId){
-        ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl+"/report/patient/{patientId}", String.class,patientId);
-        return response.getBody();
+        System.out.println("[Patient] try getting report");
+        this.webClient = WebClient.create(this.serviceUrl);
+        Mono<String> stream = this.webClient
+                .get()
+                .uri("/report/patient/{patientId}", patientId)
+                .retrieve().bodyToMono(new ParameterizedTypeReference<String>(){});
+
+        return stream.block();
+
+
+//        ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl+"/report/patient/{patientId}", String.class,patientId);
+//        return response.getBody();
     }
 
 }

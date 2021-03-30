@@ -127,9 +127,4 @@ public class PatientController {
         return patientService.findAll();
     }
 
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from TourGuide! GpsUtil";
-    }
-
 }
