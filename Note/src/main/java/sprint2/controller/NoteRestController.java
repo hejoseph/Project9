@@ -29,6 +29,11 @@ public class NoteRestController {
         return noteService.getNotesFromPatient(patientId);
     }
 
+    @GetMapping("/delete/notes")
+    public Boolean deleteAllNoteFromPatient(@RequestParam String patientId) {
+        return noteService.deleteNotesFromPatient(patientId);
+    }
+
     @RequestMapping("/")
     public String index() {
         return "Note Controller is up";

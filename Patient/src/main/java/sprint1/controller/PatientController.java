@@ -10,6 +10,7 @@ import sprint1.model.Patient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sprint1.service.NoteService;
 import sprint1.service.PatientService;
 import sprint1.service.ReportService;
 
@@ -24,9 +25,13 @@ public class PatientController {
 
     private final PatientService patientService;
     private final ReportService reportService;
+    private final NoteService noteService;
 
-    public PatientController(PatientService patientService, ReportService reportService) {this.patientService = patientService;
-    this.reportService = reportService;}
+    public PatientController(PatientService patientService, ReportService reportService, NoteService noteService) {
+        this.patientService = patientService;
+        this.reportService = reportService;
+        this.noteService = noteService;
+    }
 
     @PostMapping("/patients")
     public ResponseEntity addPatient(@RequestBody Patient patientDto) {
@@ -116,6 +121,9 @@ public class PatientController {
     public String deletePatient(@PathVariable("id") Integer id, Model model) {
         System.out.println("CALLED");
         Patient patient = patientService.deletePatient(id);
+        if(patient!=null){
+            noteService.deleteNotesFromPatient(patient.getId()+"");
+        }
         model.addAttribute("patients", patientService.findAll());
         logger.info("Patientlist deleted successfuly, model updated");
         logger.info(patient.toString());

@@ -36,4 +36,16 @@ public class NoteService {
     public List<Note> getNotesFromPatient(String patientId) {
         return noteRepository.findByPatientId(patientId);
     }
+
+    public Boolean deleteNotesFromPatient(String patientId) {
+        try{
+            List<Note> notes = getNotesFromPatient(patientId);
+            for(Note note : notes){
+                noteRepository.delete(note);
+            }
+        }catch(Exception e){
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
 }

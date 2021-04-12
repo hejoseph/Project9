@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sprint2.model.Note;
 import sprint2.repository.NoteRepository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -105,6 +107,17 @@ public class NoteControllerTest {
         assertNull(noteFound);
     }
 
+    @Test
+    public void deleteAllNotesFromPatient() throws Exception {
+        noteDAO.save(new Note("","","","","","1"));
+        noteDAO.save(new Note("","","","","","1"));
+        noteDAO.save(new Note("","","","","","1"));
+        noteDAO.save(new Note("","","","","","1"));
+        this.mockmvc.perform(get("/delete/notes?patientId="+1))
+                .andDo(MockMvcResultHandlers.print());
+        List<Note> notes = noteDAO.findByPatientId("1");
+        assertEquals(0, notes.size());
+    }
 
 
 }

@@ -39,6 +39,17 @@ public class NoteService {
 //        return visits;
 //    }
 
+
+    public boolean deleteNotesFromPatient(String patientId){
+        this.webClient = WebClient.create(this.serviceUrl);
+        Mono<Boolean> stream = this.webClient
+                .get()
+                .uri("/delete/notes?patientId={patientId}", patientId)
+                .retrieve().bodyToMono(new ParameterizedTypeReference<Boolean>(){});
+
+        return stream.block();
+    }
+
     public List<Note> getNotesFromPatient(String patientId){
         System.out.println(this.serviceUrl);
         this.webClient = WebClient.create(this.serviceUrl);

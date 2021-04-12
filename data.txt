@@ -1,0 +1,30 @@
+curl -d "firstname=Early Onset&surname=37ans&dob=1984-12-31&gender=F&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-01&doctorName=Test&title=11&text=Hemoglobine A1C, Microalbumine,Taille,Poids,Fumeur,Anormal,Cholesterol,Vertige,Rechute, Reaction,Anticorps&patientId=1" -X POST http://localhost:9031/note/validate
+
+
+curl -d "firstname=In Danger&surname=37ans&dob=1984-12-31&gender=F&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-01&doctorName=Test&title=5&text=Hemoglobine A1C, Microalbumine,Taille,Poids,Fumeur&patientId=2" -X POST http://localhost:9031/note/validate
+
+curl -d "date=2021-01-02&doctorName=Test&title=1&text=Fumeur&patientId=2" -X POST http://localhost:9031/note/validate
+
+curl -d "firstname=Borderline&surname=37ans&dob=1984-12-31&gender=F&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-02&doctorName=Test&title=2&text=Fumeur Taille&patientId=3" -X POST http://localhost:9031/note/validate
+
+curl -d "firstname=None&surname=37ans&dob=1984-12-31&gender=F&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-02&doctorName=Test&title=1&text=Fumeur&patientId=4" -X POST http://localhost:9031/note/validate
+
+curl -d "firstname=Early Onset&surname=27ans&dob=1994-12-31&gender=M&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-01&doctorName=Test&title=5&text=Hemoglobine A1C, Microalbumine,Taille,Poids,Fumeur&patientId=5" -X POST http://localhost:9031/note/validate
+
+curl -d "date=2021-01-02&doctorName=Test&title=1&text=Fumeur&patientId=5" -X POST http://localhost:9031/note/validate
+
+curl -d "firstname=In Danger&surname=27ans&dob=1994-12-31&gender=M&address=1 Brookside St&phone=100-222-3333" -X POST http://localhost:9030/patient/validate
+
+curl -d "date=2021-01-01&doctorName=Test&title=2&text=Hemoglobine A1C, Microalbumine&patientId=6" -X POST http://localhost:9031/note/validate
+
+curl -d "date=2021-01-02&doctorName=Test&title=1&text=Fumeur&patientId=6" -X POST http://localhost:9031/note/validate

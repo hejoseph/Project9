@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class ReportService {
 
-    private final String[] triggers = {"Hémoglobine A1C", "Microalbumine","Taille","Poids","Fumeur","Anormal","Cholestérol","Vertige","Rechute", "Réaction","Anticorps"};
+    private final String[] triggers = {"H(é|e)moglobine A1C", "Microalbumine","Taille","Poids","Fumeur","Anormal","Cholest(é|e)rol","Vertige","Rechute", "R(é|e)action","Anticorps"};
 
     private final NoteService noteService;
 
