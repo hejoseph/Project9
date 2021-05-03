@@ -53,7 +53,7 @@ public class NoteController {
     }
 
     @PostMapping("/note/validate")
-    public String validate(@Valid Note note, BindingResult result, Model model) {
+    public String validate(@RequestBody @Valid Note note, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             noteService.saveNote(note);
             model.addAttribute("notes", noteService.findAll());

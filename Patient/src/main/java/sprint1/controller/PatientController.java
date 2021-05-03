@@ -43,7 +43,8 @@ public class PatientController {
     @RequestMapping("/patient/list")
     public String home(Model model)
     {
-        model.addAttribute("patients", patientService.findAll());
+        List<Patient> list = patientService.findAll();
+        model.addAttribute("patients", list);
         return "patient/list";
     }
 
@@ -79,16 +80,14 @@ public class PatientController {
     }
 
     @PostMapping("/patient/validate")
-    public String validate(@Valid Patient patient, BindingResult result, Model model) {
+    public String validate(@RequestBody @Valid Patient patient, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             patientService.savePatient(patient);
             model.addAttribute("patients", patientService.findAll());
             logger.info("patient adding validation successful");
-            logger.info(patient.toString());
             return "redirect:/patient/list";
         }
         logger.info("Error on patient list adding validation, go back to adding form");
-        logger.info(patient.toString());
         return "redirect:/patient/add";
     }
 
@@ -98,12 +97,11 @@ public class PatientController {
         Patient patient = patientService.findById(id);
         model.addAttribute("patient", patient);
         logger.info("Patientlist's updating form display successful");
-        logger.info(patient.toString());
         return "patient/update";
     }
 
     @PostMapping("/patient/update/{id}")
-    public String updatePatient(@PathVariable("id") Integer id, @Valid Patient patient,
+    public String updatePatient(@PathVariable("id") Integer id, @RequestBody @Valid Patient patient,
                                 BindingResult result, Model model) {
         if(result.hasErrors()) {
             logger.info("Patientlist updating failed, go back to updating form display, has errors");
@@ -113,20 +111,17 @@ public class PatientController {
         patientService.savePatient(patient);
         model.addAttribute("patients", patientService.findAll());
         logger.info("Patientlist saved successfuly, model updated");
-        logger.info(patient.toString());
         return "redirect:/patient/list";
     }
 
     @GetMapping("/patient/delete/{id}")
     public String deletePatient(@PathVariable("id") Integer id, Model model) {
-        System.out.println("CALLED");
         Patient patient = patientService.deletePatient(id);
         if(patient!=null){
             noteService.deleteNotesFromPatient(patient.getId()+"");
         }
         model.addAttribute("patients", patientService.findAll());
         logger.info("Patientlist deleted successfuly, model updated");
-        logger.info(patient.toString());
         return "redirect:/patient/list";
     }
 

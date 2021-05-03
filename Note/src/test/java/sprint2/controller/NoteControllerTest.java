@@ -1,12 +1,12 @@
 package sprint2.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,6 +16,8 @@ import sprint2.model.Note;
 import sprint2.repository.NoteRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,20 +32,30 @@ public class NoteControllerTest {
 
     Note note = new Note("a","b","c","d","e","f");
 
-    @Autowired
-    private NoteRepository noteDAO;
+    @MockBean
+    private NoteRepository noteRepository;
 
     @Autowired
     MockMvc mockmvc;
 
     @PostConstruct
     public void init(){
-        note = noteDAO.save(note);
+        given(noteRepository.save(note)).willAnswer(invocation -> invocation.getArgument(0));
+        note = noteRepository.save(note);
+        given(noteRepository.findById(anyString())).willReturn(Optional.ofNullable(note));
     }
 
     @Test
     public void getNoteList() throws Exception {
         this.mockmvc.perform(get("/note/list"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void getShowUpdatePageTest() throws Exception {
+        this.mockmvc.perform(get("/note/update/"+note.getId()))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
                 .andDo(MockMvcResultHandlers.print());
@@ -99,23 +111,24 @@ public class NoteControllerTest {
 
     @Test
     public void deleteNote() throws Exception {
+        given(noteRepository.findById(anyString())).willReturn(Optional.ofNullable(note));
         this.mockmvc.perform(get("/note/delete/"+note.getId()))
-//                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.status().isFound())
 //                .andExpect(MockMvcResultMatchers.redirectedUrl("/note/list"))
                 .andDo(MockMvcResultHandlers.print());
-        Note noteFound = noteDAO.findOneById(note.getId());
-        assertNull(noteFound);
+//        Note noteFound = noteDAO.findOneById(note.getId());
+//        assertNull(noteFound);
     }
 
     @Test
     public void deleteAllNotesFromPatient() throws Exception {
-        noteDAO.save(new Note("","","","","","1"));
-        noteDAO.save(new Note("","","","","","1"));
-        noteDAO.save(new Note("","","","","","1"));
-        noteDAO.save(new Note("","","","","","1"));
+        noteRepository.save(new Note("","","","","","1"));
+        noteRepository.save(new Note("","","","","","1"));
+        noteRepository.save(new Note("","","","","","1"));
+        noteRepository.save(new Note("","","","","","1"));
         this.mockmvc.perform(get("/delete/notes?patientId="+1))
                 .andDo(MockMvcResultHandlers.print());
-        List<Note> notes = noteDAO.findByPatientId("1");
+        List<Note> notes = noteRepository.findByPatientId("1");
         assertEquals(0, notes.size());
     }
 

@@ -24,7 +24,7 @@ public class NoteService {
     }
 
     public Note deleteNote(String id) {
-        Note note = noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bidlist Id:" + id));
+        Note note = findById(id);
         noteRepository.delete(note);
         return note;
     }
