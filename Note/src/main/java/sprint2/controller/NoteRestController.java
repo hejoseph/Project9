@@ -19,11 +19,6 @@ public class NoteRestController {
 
     public NoteRestController(NoteService noteService) {this.noteService = noteService;}
 
-//    @GetMapping("/notes")
-//    public List<Note> getAllNote() {
-//        return noteService.findAll();
-//    }
-
     @GetMapping("/notes")
     public List<Note> getAllNoteFromPatient(@RequestParam String patientId) {
         return noteService.getNotesFromPatient(patientId);
