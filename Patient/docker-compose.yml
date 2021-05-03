@@ -1,14 +1,26 @@
 version: "3"
 services:
-  api-database3:
-    image: mongo:3.2.4
-    container_name: "api-database3"
+  mysqldb3:
+    image: mysql:5.6
     ports:
-      - 27017:27017
-    command: --smallfiles
-  api:
-    image: patient2
+      - "3306:3306"
+    networks:
+      - project9-mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=demo9
+
+  patient:
+    image: patient
     ports:
-      - 9092:8080
-    links:
-      - api-database3
+      - "9030:9030"
+    networks:
+      - project9-mysql
+    depends_on:
+      - mysqldb3
+
+networks:
+  project9-mysql:
+    driver: bridge

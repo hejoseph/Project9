@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+<body>
+<div class="container">
+
+	<div class="row">
+		<div class="col-6">
+			<a href="http://localhost:9030/patient/history">Patient History</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9030/patient/list">Patient List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9031/note/list">Note List</a>&nbsp;|&nbsp;
+		</div>
+	</div>
+
+	<div class="row"><h2>Patient Report</h2></div>
+	<div th:each="patient : ${patients}" class="container">
+		<div class="row justify-content-start">
+			<table class="table table-bordered col-10">
+				<thead>
+				<tr class="bg-primary text-white">
+					<th>Patient ID</th>
+					<th>Firstname</th>
+					<th>Surname</th>
+					<th>Date of Birth</th>
+					<th>address</th>
+					<th>phone</th>
+					<th>gender</th>
+					<th>report</th>
+					<th>action</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td style="width: 10%" th:text="${patient.id}"></td>
+					<td th:text="${patient.firstname}"></td>
+					<td th:text="${patient.surname}"></td>
+					<td th:text="${patient.dob}"></td>
+					<td th:text="${patient.address}"></td>
+					<td th:text="${patient.phone}"></td>
+					<td th:text="${patient.gender}"></td>
+					<td th:text="${patient.report}"></td>
+					<td style="width: 15%" class="text-center">
+						<a th:href="@{http://localhost:9031/note/add/{id}(id=${patient.id})}">Add Note</a>&nbsp;|&nbsp;
+						<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>|&nbsp;
+						<a th:href="@{/report/patient/{id}(id=${patient.id})}">Report</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+			<div th:if="${patient.notes}" class="row justify-content-end">
+				<table class="table table-bordered col-10">
+					<thead>
+					<tr class="bg-info text-white">
+						<th>Note ID</th>
+						<th>Date</th>
+						<th>Doctor Name</th>
+						<th>Title</th>
+						<th>Text</th>
+						<th>Action</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="note : ${patient.notes}">
+						<td style="width: 10%" th:text="${note.id}"></td>
+						<td th:text="${note.date}"></td>
+						<td th:text="${note.doctorName}"></td>
+						<td th:text="${note.title}"></td>
+						<td th:text="${note.text}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{http://localhost:9031/note/update/{id}(id=${note.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{http://localhost:9031/note/delete/{id}(id=${note.id})}">Delete</a>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+	</div>
+</div>
+</body>
+</html>

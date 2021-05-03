@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Component
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
+    Patient findOneById(Integer id);
 }

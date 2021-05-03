@@ -1,9 +1,9 @@
 package sprint1.model;
 
-import sun.reflect.generics.visitor.Visitor;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 //import com.project9.Sprint2.Visit;
 
@@ -14,6 +14,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotNull
     private String firstname;
     private String surname;
     private String dob;
@@ -22,7 +23,10 @@ public class Patient {
     private String gender;
 
     @Transient
-    private List<Visit> visits;
+    private List<Note> notes;
+
+    @Transient
+    private String report;
 
     public Patient(String firstname, String surname, String dob, String address, String phone, String gender) {
         this.firstname = firstname;
@@ -31,7 +35,7 @@ public class Patient {
         this.address = address;
         this.phone = phone;
         this.gender = gender;
-        this.visits = new ArrayList<>();
+        this.notes = new ArrayList<>();
     }
 
     public Patient() {
@@ -93,11 +97,19 @@ public class Patient {
         this.gender = gender;
     }
 
-    public List<Visit> getVisits() {
-        return visits;
+    public List<Note> getNotes() {
+        return notes;
     }
 
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
     }
 }

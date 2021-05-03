@@ -10,10 +10,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="http://localhost:8090/patient/history">Patient History</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8090/patient/list">Patient List</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8080/visit/list">Visit List</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8081/note/list">Note List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9030/patient/history">Patient History</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9030/patient/list">Patient List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9031/note/list">Note List</a>&nbsp;|&nbsp;
 		</div>
 	</div>
 	<div class="row"><h2>Note List</h2></div>
@@ -27,7 +26,7 @@
 				<th>Doctor Name</th>
 				<th>Title</th>
 				<th>Text</th>
-				<th>Visit Id</th>
+				<th>Patient Id</th>
 				<th>Action</th>
 			</tr>
 			</thead>
@@ -38,7 +37,7 @@
 				<td th:text="${note.doctorName}"></td>
 				<td th:text="${note.title}"></td>
 				<td th:text="${note.text}"></td>
-				<td th:text="${note.visitId}"></td>
+				<td th:text="${note.patientId}"></td>
 				<td style="width: 15%" class="text-center">
 					<a th:href="@{/note/update/{id}(id=${note.id})}">Edit</a>&nbsp;|&nbsp;
 					<a th:href="@{/note/delete/{id}(id=${note.id})}">Delete</a>

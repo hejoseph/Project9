@@ -1,0 +1,9 @@
+version: "3"
+services:
+  report:
+    image: report:latest
+    restart: always
+    ports:
+      - 9032:9032
+    # links:
+    #   - api-database3

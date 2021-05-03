@@ -10,10 +10,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="http://localhost:8090/patient/history">Patient History</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8090/patient/list">Patient List</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8080/visit/list">Visit List</a>&nbsp;|&nbsp;
-			<a href="http://localhost:8081/note/list">Note List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9030/patient/history">Patient History</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9030/patient/list">Patient List</a>&nbsp;|&nbsp;
+			<a href="http://localhost:9031/note/list">Note List</a>&nbsp;|&nbsp;
 		</div>
 	</div>
 	<div class="row"><h2>Patient List</h2></div>
@@ -34,7 +33,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="patient : ${patients}">
-					<td><a th:href="@{http://localhost:8090/patient/{id}/history(id=${patient.id})}" th:text="${patient.id}"></a></td>
+					<td><a th:href="@{http://localhost:9030/patient/{id}/history(id=${patient.id})}" th:text="${patient.id}"></a></td>
 					<td th:text="${patient.firstname}"></td>
 					<td th:text="${patient.surname}"></td>
 					<td th:text="${patient.dob}"></td>
@@ -42,7 +41,7 @@
 					<td th:text="${patient.phone}"></td>
 					<td th:text="${patient.gender}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{http://localhost:8080/visit/add/{id}(id=${patient.id})}">Add Visit</a>&nbsp;|&nbsp;
+<!--						<a th:href="@{http://localhost:8080/visit/add/{id}(id=${patient.id})}">Add Visit</a>&nbsp;|&nbsp;-->
 						<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
 						<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
 					</td>

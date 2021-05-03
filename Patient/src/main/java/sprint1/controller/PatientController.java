@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import sprint1.model.Patient;
-import sprint1.model.PatientDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sprint1.service.NoteService;
 import sprint1.service.PatientService;
+import sprint1.service.ReportService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,8 +24,14 @@ public class PatientController {
     private static final Logger logger = LogManager.getLogger(PatientController.class);
 
     private final PatientService patientService;
+    private final ReportService reportService;
+    private final NoteService noteService;
 
-    public PatientController(PatientService patientService) {this.patientService = patientService;}
+    public PatientController(PatientService patientService, ReportService reportService, NoteService noteService) {
+        this.patientService = patientService;
+        this.reportService = reportService;
+        this.noteService = noteService;
+    }
 
     @PostMapping("/patients")
     public ResponseEntity addPatient(@RequestBody Patient patientDto) {
@@ -36,7 +43,8 @@ public class PatientController {
     @RequestMapping("/patient/list")
     public String home(Model model)
     {
-        model.addAttribute("patients", patientService.findAll());
+        List<Patient> list = patientService.findAll();
+        model.addAttribute("patients", list);
         return "patient/list";
     }
 
@@ -53,23 +61,33 @@ public class PatientController {
         return "patient/history";
     }
 
+    @RequestMapping("/report/patient/{id}")
+    public String generateReport(@PathVariable("id") Integer id, Model model) throws Exception {
+        List<Patient> patients = patientService.findPatientHistory(id);
+        if(patients.size()==1){
+            String result = reportService.generateReport(id+"");
+            patients.get(0).setReport(result);
+        }
+        model.addAttribute("patients", patients);
+        return "patient/report";
+    }
+
+
     //get page form add
     @GetMapping("/patient/add")
-    public String addBidForm(Patient p) {
+    public String addPatientForm(Patient p) {
         return "patient/add";
     }
 
     @PostMapping("/patient/validate")
-    public String validate(@Valid Patient patient, BindingResult result, Model model) {
+    public String validate(@RequestBody @Valid Patient patient, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             patientService.savePatient(patient);
             model.addAttribute("patients", patientService.findAll());
             logger.info("patient adding validation successful");
-            logger.info(patient.toString());
             return "redirect:/patient/list";
         }
-        logger.info("Error on bidlist adding validation, go back to adding form");
-        logger.info(patient.toString());
+        logger.info("Error on patient list adding validation, go back to adding form");
         return "redirect:/patient/add";
     }
 
@@ -78,43 +96,38 @@ public class PatientController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Patient patient = patientService.findById(id);
         model.addAttribute("patient", patient);
-        logger.info("Bidlist's updating form display successful");
-        logger.info(patient.toString());
+        logger.info("Patientlist's updating form display successful");
         return "patient/update";
     }
 
     @PostMapping("/patient/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid Patient patient,
-                            BindingResult result, Model model) {
+    public String updatePatient(@PathVariable("id") Integer id, @RequestBody @Valid Patient patient,
+                                BindingResult result, Model model) {
         if(result.hasErrors()) {
-            logger.info("Bidlist updating failed, go back to updating form display, has errors");
+            logger.info("Patientlist updating failed, go back to updating form display, has errors");
             return "redirect:/patient/update";
         }
         patient.setId(id);
         patientService.savePatient(patient);
         model.addAttribute("patients", patientService.findAll());
-        logger.info("Bidlist saved successfuly, model updated");
-        logger.info(patient.toString());
+        logger.info("Patientlist saved successfuly, model updated");
         return "redirect:/patient/list";
     }
 
     @GetMapping("/patient/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
+    public String deletePatient(@PathVariable("id") Integer id, Model model) {
         Patient patient = patientService.deletePatient(id);
+        if(patient!=null){
+            noteService.deleteNotesFromPatient(patient.getId()+"");
+        }
         model.addAttribute("patients", patientService.findAll());
-        logger.info("Bidlist deleted successfuly, model updated");
-        logger.info(patient.toString());
+        logger.info("Patientlist deleted successfuly, model updated");
         return "redirect:/patient/list";
     }
 
     @GetMapping("/patients")
     public List<Patient> getAllPatient() {
         return patientService.findAll();
-    }
-
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from TourGuide! GpsUtil";
     }
 
 }

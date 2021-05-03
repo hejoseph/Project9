@@ -1,23 +1,22 @@
 package sprint1.service;
 
+import sprint1.model.Note;
 import sprint1.model.Patient;
 import org.springframework.stereotype.Service;
-import sprint1.model.Visit;
 import sprint1.repository.PatientRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final VisitService visitService;
+    private final NoteService noteService;
 
-    public PatientService(PatientRepository patientRepository, VisitService visitService) {
+    public PatientService(PatientRepository patientRepository, NoteService noteService) {
         this.patientRepository = patientRepository;
-        this.visitService = visitService;
+        this.noteService = noteService;
     }
 
     public Patient savePatient(Patient patient) {
@@ -40,11 +39,13 @@ public class PatientService {
 
     public List<Patient> findPatientsHistory() {
         List<Patient> patients = patientRepository.findAll();
-//        HashMap<String, Visit> visits = visitService.getAllVisits();
+        System.out.println("[PATIENT LIST]");
+//        HashMap<String, Visit> visits = noteService.getAllVisits();
         for(Patient patient : patients){
-            List<Visit> visits = visitService.getVisitsFromPatient(patient.getId()+"");
-            patient.setVisits(visits);
-
+            System.out.println("[Try getting notes]");
+            List<Note> notes = noteService.getNotesFromPatient(patient.getId()+"");
+            patient.setNotes(notes);
+            System.out.println("[notes got it]");
         }
         return patients;
     }
@@ -57,10 +58,14 @@ public class PatientService {
         }
 
         for(Patient patient : patients){
-            List<Visit> visits = visitService.getVisitsFromPatient(patient.getId()+"");
-            patient.setVisits(visits);
+            List<Note> notes = noteService.getNotesFromPatient(patient.getId()+"");
+            patient.setNotes(notes);
 
         }
         return patients;
+    }
+
+    public Patient getPatient(String patientId) {
+        return patientRepository.findById(Integer.parseInt(patientId)).orElseThrow(()->new IllegalArgumentException("patient id="+patientId+" not found"));
     }
 }

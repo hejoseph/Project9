@@ -24,7 +24,7 @@ public class NoteService {
     }
 
     public Note deleteNote(String id) {
-        Note note = noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bidlist Id:" + id));
+        Note note = findById(id);
         noteRepository.delete(note);
         return note;
     }
@@ -33,7 +33,19 @@ public class NoteService {
         return noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     }
 
-    public List<Note> getNotesFromVisit(String visitId) {
-        return noteRepository.findByVisitId(visitId);
+    public List<Note> getNotesFromPatient(String patientId) {
+        return noteRepository.findByPatientId(patientId);
+    }
+
+    public Boolean deleteNotesFromPatient(String patientId) {
+        try{
+            List<Note> notes = getNotesFromPatient(patientId);
+            for(Note note : notes){
+                noteRepository.delete(note);
+            }
+        }catch(Exception e){
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 }

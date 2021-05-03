@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import sprint2.model.Note;
-import sprint2.model.NoteDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +26,9 @@ public class NoteController {
     public NoteController(NoteService noteService) {this.noteService = noteService;}
 
     @PostMapping("/notes")
-    public ResponseEntity addNote(@RequestBody NoteDto noteDto) {
-        log.info("Request : {}", noteDto);
-        noteService.saveNote(noteDto.toNote());
+    public ResponseEntity addNote(@RequestBody Note note) {
+        log.info("Request : {}", note);
+        noteService.saveNote(note);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -46,15 +45,15 @@ public class NoteController {
         return "note/add";
     }
 
-    @GetMapping("/note/add/{visitId}")
-    public String addNoteForVisit(@PathVariable("visitId") String visitId, Note note, Model model) {
-        note.setVisitId(visitId);
+    @GetMapping("/note/add/{patientId}")
+    public String addNoteForPatient(@PathVariable("patientId") String patientId, Note note, Model model) {
+        note.setPatientId(patientId);
         model.addAttribute("note",note);
         return "note/add";
     }
 
     @PostMapping("/note/validate")
-    public String validate(@Valid Note note, BindingResult result, Model model) {
+    public String validate(@RequestBody @Valid Note note, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             noteService.saveNote(note);
             model.addAttribute("notes", noteService.findAll());
