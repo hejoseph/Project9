@@ -23,16 +23,11 @@ public class PatientService {
     private WebClient webClient;
 
     public PatientService() {
-//        this.serviceUrl = "http://localhost:9030";
         this.restTemplate = new RestTemplate();
 
     }
 
     public Patient getPatient(String patientId){
-//        ResponseEntity<Patient> response = restTemplate.getForEntity(serviceUrl+"/patient?patientId={patientId}", Patient.class,patientId);
-//        return response.getBody();
-
-        System.out.println("[Report] try getting patient");
         this.webClient = WebClient.create(this.serviceUrl);
         Mono<Patient> stream = this.webClient
                 .get()

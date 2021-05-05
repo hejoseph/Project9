@@ -22,28 +22,11 @@ public class NoteService {
     private WebClient webClient;
 
     public NoteService() {
-//        this.serviceUrl = "http://localhost:9031";
         this.restTemplate = new RestTemplate();
 
     }
 
-//    public HashMap<String, Visit> getAllVisits(){
-////        Mono<List<Visit>> stream = this.webClient
-////                .get()
-////                .uri("/visits")
-////                .retrieve().bodyToMono(new ParameterizedTypeReference<List<Visit>>(){});
-////        return stream.block();
-//        ResponseEntity<Visit[]> response = restTemplate.getForEntity(serviceUrl+"/visits", Visit[].class);
-//        HashMap<String, Visit> visits = new HashMap<>();
-//        for(Visit visit : response.getBody()){
-//            visits.put(visit.getPatientId(), visit);
-//        }
-//        return visits;
-//    }
-
     public List<Note> getNotesFromPatient(String patientId){
-
-        System.out.println("[Report] try getting notes");
         this.webClient = WebClient.create(this.serviceUrl);
         Mono<List<Note>> stream = this.webClient
                 .get()
@@ -51,13 +34,6 @@ public class NoteService {
                 .retrieve().bodyToMono(new ParameterizedTypeReference<List<Note>>(){});
 
         return stream.block();
-
-//        ResponseEntity<Note[]> response = restTemplate.getForEntity(serviceUrl+"/notes?patientId={patientId}", Note[].class,patientId);
-//        List<Note> notes = Arrays.asList(response.getBody());
-//        if(notes.size()==0){
-//            return null;
-//        }
-//        return notes;
     }
 
 

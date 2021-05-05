@@ -26,20 +26,6 @@ public class ReportService {
         this.restTemplate = new RestTemplate();
     }
 
-//    public HashMap<String, Visit> getAllVisits(){
-////        Mono<List<Visit>> stream = this.webClient
-////                .get()
-////                .uri("/visits")
-////                .retrieve().bodyToMono(new ParameterizedTypeReference<List<Visit>>(){});
-////        return stream.block();
-//        ResponseEntity<Visit[]> response = restTemplate.getForEntity(serviceUrl+"/visits", Visit[].class);
-//        HashMap<String, Visit> visits = new HashMap<>();
-//        for(Visit visit : response.getBody()){
-//            visits.put(visit.getPatientId(), visit);
-//        }
-//        return visits;
-//    }
-
     public String generateReport(String patientId){
         System.out.println("[Patient] try getting report");
         this.webClient = WebClient.create(this.serviceUrl);
@@ -49,10 +35,6 @@ public class ReportService {
                 .retrieve().bodyToMono(new ParameterizedTypeReference<String>(){});
 
         return stream.block();
-
-
-//        ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl+"/report/patient/{patientId}", String.class,patientId);
-//        return response.getBody();
     }
 
 }

@@ -80,7 +80,7 @@ public class PatientController {
     }
 
     @PostMapping("/patient/validate")
-    public String validate(@RequestBody @Valid Patient patient, BindingResult result, Model model) {
+    public String validate(@Valid Patient patient, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             patientService.savePatient(patient);
             model.addAttribute("patients", patientService.findAll());
@@ -101,7 +101,7 @@ public class PatientController {
     }
 
     @PostMapping("/patient/update/{id}")
-    public String updatePatient(@PathVariable("id") Integer id, @RequestBody @Valid Patient patient,
+    public String updatePatient(@PathVariable("id") Integer id, @Valid Patient patient,
                                 BindingResult result, Model model) {
         if(result.hasErrors()) {
             logger.info("Patientlist updating failed, go back to updating form display, has errors");
