@@ -110,3 +110,7 @@ Get an overview of the patient and its notes associated :
 
 Get all the history of all patients
 ![patient history](screenshots/all_patient_history.png)
+
+# Test Coverage 
+
+![test_coverage](screenshots/test_coverage.png)
