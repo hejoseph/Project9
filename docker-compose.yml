@@ -1,11 +1,11 @@
 version: "3"
 services:
   api-database3:
-    image: mongo:3.2.4
+    image: mongo:latest
     container_name: "api-database3"
     ports:
       - 27017:27017
-    command: --smallfiles
+    # command: --smallfiles
     networks:
       - project9-mysql
   note:
